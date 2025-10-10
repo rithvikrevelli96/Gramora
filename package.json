@@ -1,0 +1,16 @@
+{
+  "name": "gramora",
+  "version": "1.0.0",
+  "description": "AI Instagram Content Generator",
+  "scripts": {
+    "dev:frontend": "cd Frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev": "powershell -Command \"Start-Process powershell -ArgumentList '-NoExit','-Command','cd Frontend; npm run dev'; Start-Process powershell -ArgumentList '-NoExit','-Command','cd backend; npm run dev'\"",
+    "build": "cd Frontend && npm run build",
+    "preview": "cd Frontend && npm run preview",
+    "install-deps": "cd Frontend && npm install && cd ../backend && npm install && cd .."
+  },
+  "keywords": ["ai", "instagram", "content", "generator", "react", "vite"],
+  "author": "",
+  "license": "MIT"
+}
