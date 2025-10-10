@@ -1,0 +1,14 @@
+{
+  "name": "gramora",
+  "version": "1.0.0",
+  "description": "AI Instagram Content Generator",
+  "scripts": {
+    "dev": "cd Frontend && npm run dev",
+    "build": "cd Frontend && npm run build",
+    "preview": "cd Frontend && npm run preview",
+    "install-deps": "cd Frontend && npm install"
+  },
+  "keywords": ["ai", "instagram", "content", "generator", "react", "vite"],
+  "author": "",
+  "license": "MIT"
+}
