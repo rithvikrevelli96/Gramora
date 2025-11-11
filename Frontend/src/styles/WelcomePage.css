@@ -1,0 +1,475 @@
+/* Layout */
+.welcome-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background-color: #0a0f1c;
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Title */
+.welcome-title {
+  font-size: 64px;
+  color: #00ffff;
+  text-shadow: 0 0 12px #00ffff;
+  animation: pulseGlow 2s infinite ease-in-out;
+  z-index: 2;
+}
+
+/* Buttons */
+.button-row {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  z-index: 2;
+}
+
+.glow-button {
+  padding: 16px 48px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #00ffff;
+  background: transparent;
+  border: 2px solid #00ffff;
+  border-radius: 12px;
+  text-shadow: 0 0 8px #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glow-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
+}
+
+/* Ambient glow */
+.ambient-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1), transparent);
+  filter: blur(40px);
+  z-index: 0;
+}
+
+/* Mesh background */
+.mesh-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: transform 0.2s ease-out;
+}
+
+.mesh-lines {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.mesh-path {
+  fill: none;
+  stroke: url(#glowGradient);
+  stroke-width: 0.6;
+  stroke-opacity: 0.6;
+  animation: waveFlow 6s infinite ease-in-out;
+}
+
+/* Nodes and rings */
+.nodes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.node-wrapper {
+  position: absolute;
+  pointer-events: auto;
+}
+
+.node {
+  width: 10px;
+  height: 10px;
+  background: #00ffff;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(0, 255, 255, 0.7);
+  animation: pulseNode 4s infinite ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.node.interactive:hover {
+  transform: scale(2);
+  box-shadow: 0 0 32px rgba(0, 255, 255, 1);
+}
+
+.ring {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #00ffff;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: ringPulse 2s infinite ease-out;
+}
+
+.ring.delay {
+  animation-delay: 1s;
+}
+
+/* Data packets */
+.data-packets {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.packet {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #00ffff;
+  border-radius: 50%;
+  animation: travelPacket 6s infinite linear;
+}
+
+.packet-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.packet-2 {
+  top: 40%;
+  left: 30%;
+  animation-delay: 1s;
+}
+
+.packet-3 {
+  top: 50%;
+  left: 50%;
+  animation-delay: 2s;
+}
+
+.packet-4 {
+  top: 60%;
+  left: 70%;
+  animation-delay: 3s;
+}
+
+.packet-5 {
+  top: 80%;
+  left: 90%;
+  animation-delay: 4s;
+}
+
+.packet-6 {
+  top: 30%;
+  left: 60%;
+  animation-delay: 5s;
+}
+
+/* Mute toggle button */
+.mute-toggle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #00ffff;
+  cursor: pointer;
+  z-index: 3;
+  text-shadow: 0 0 8px #00ffff;
+  transition: transform 0.3s ease;
+}
+
+.mute-toggle:hover {
+  transform: scale(1.2);
+}
+
+/* AI Avatar */
+.ai-avatar {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  font-size: 48px;
+  cursor: pointer;
+  z-index: 3;
+  animation: floatAvatar 4s infinite ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+.ai-avatar:hover {
+  transform: scale(1.1);
+}
+
+.ai-avatar.speaking {
+  animation: pulseMouth 0.6s infinite ease-in-out;
+}
+
+.avatar-bubble {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00ffff;
+  border-radius: 12px;
+  padding: 8px 12px;
+  max-width: 220px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+}
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  background-color: #00ffff;
+  border-radius: 50%;
+  animation: blink 1.2s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Transitions */
+.fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-in forwards;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    text-shadow: 0 0 12px #00ffff;
+  }
+
+  50% {
+    text-shadow: 0 0 24px #00ffff;
+  }
+
+  100% {
+    text-shadow: 0 0 12px #00ffff;
+  }
+}
+
+@keyframes pulseNode {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes waveFlow {
+
+  0%,
+  100% {
+    stroke-opacity: 0.3;
+  }
+
+  50% {
+    stroke-opacity: 0.8;
+  }
+}
+
+@keyframes travelPacket {
+  0% {
+    transform: translateX(0);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateX(40px);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateX(80px);
+    opacity: 0.3;
+  }
+}
+
+@keyframes floatAvatar {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulseMouth {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+/* Fog layer */
+.fog-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0, 255, 255, 0.05), transparent 70%);
+  filter: blur(60px);
+  z-index: 0;
+}
+
+/* Grid layer */
+.grid-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(to right, rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+}
+
+/* Texture overlay */
+.texture-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('/textures/tech-pattern.svg');
+  background-size: cover;
+  opacity: 0.05;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+/* Logo */
+.welcome-logo {
+  width: 250px;
+  height: auto;
+  margin-bottom: 27px;
+  z-index: 2;
+  animation: fadeIn 1.2s ease-out;
+  filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.6));
+}
+
+/* Dynamic Title + Tagline */
+.hero-title {
+  font-size: 3.5rem;
+  color: #00f0ff;
+  text-shadow: 1px 1px 0 black;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease-out forwards;
+  filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.6));
+  margin: 0.5rem 0;
+  text-align: center;
+  z-index: 2;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #ccc;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1.2s ease-out forwards;
+  text-align: center;
+  margin-bottom: 1rem;
+  z-index: 2;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
