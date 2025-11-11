@@ -1,0 +1,49 @@
+.gramora-tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tab {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.9em;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+
+.tab.gold {
+  background-color: rgb(246, 246, 246);
+  color: black;
+}
+
+.tab.blue {
+  background-color: #007bff;
+}
+
+.tab.lightblue {
+  background-color: #5bc0de;
+}
+
+.upload-btn {
+  background-color: purple;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.gramora-output {
+  margin-top: 20px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 0.95em;
+  color: #333;
+}

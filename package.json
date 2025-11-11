@@ -1,15 +1,14 @@
 {
-  "$schema": "https://json.schemastore.org/package.json",
-  "name": "gramora",
+  "name": "ai-instagram-generator-backend",
   "version": "1.0.0",
-  "description": "AI Instagram Content Generator",
+  "type": "module",
   "scripts": {
     "dev:frontend": "cd Frontend && npm run dev",
     "dev:backend": "cd backend && npm run dev",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "frontend": "cd frontend && npm run dev",
-    "backend": "nodemon index.js",
-    "start": "node index.js",
+    "frontend": "cd Frontend && npm run dev",
+    "backend": "nodemon index.mjs",
+    "start": "node index.mjs",
     "build": "cd Frontend && npm run build",
     "preview": "cd Frontend && npm run preview",
     "install-deps": "npm install && cd Frontend && npm install && cd ../backend && npm install && cd .."
@@ -27,6 +26,23 @@
   },
   "license": "MIT",
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "axios": "^1.13.0",
+    "cloudinary": "^2.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "gsap": "^3.13.0",
+    "mongoose": "^8.19.3",
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "streamifier": "^0.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.0.1"
   }
 }

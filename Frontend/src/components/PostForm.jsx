@@ -1,83 +1,70 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { API } from "../Api";
+import React, { useState } from 'react';
 
-export default function PostForm() {
-  const [prompt, setPrompt] = useState("");
-  const [caption, setCaption] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [postType, setPostType] = useState("post");
-  const [loading, setLoading] = useState(false);
+function PostForm() {
+  const [prompt, setPrompt] = useState('');
+  const [caption, setCaption] = useState('');
+  const [hashtags, setHashtags] = useState('');
+  const [error, setError] = useState('');
 
-  const generateCaption = async () => {
-    setLoading(true);
+  const handleGenerateCaption = async () => {
     try {
-      const res = await axios.post(`${API}/generate`, { prompt });
-      setCaption(res.data.caption);
+      const res = await fetch('http://localhost:5000/generate-caption', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setCaption(data.caption);
+        setError('');
+      } else {
+        setError(data.error || 'Caption generation failed');
+      }
     } catch (err) {
-      alert("Error generating caption");
-    } finally {
-      setLoading(false);
+      setError('Server error: ' + err.message);
     }
   };
 
-  const uploadPost = async () => {
-    if (!imageUrl) return alert("Enter a public image URL.");
-    if (!caption) return alert("Generate or enter a caption.");
+  const handleGenerateHashtags = async () => {
     try {
-      const res = await axios.post(`${API}/upload`, {
-        image_url: imageUrl,
-        caption,
-        post_type: postType,
+      const res = await fetch('http://localhost:5000/generate-hashtag', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
       });
-      if (res.data && res.data.success) {
-        alert(`✅ Post published! ID: ${res.data.post_id}`);
+      const data = await res.json();
+      if (res.ok) {
+        setHashtags(data.hashtags);
+        setError('');
       } else {
-        alert("Uploaded, but unexpected response.");
+        setError(data.error || 'Hashtag generation failed');
       }
     } catch (err) {
-      alert("❌ Upload failed");
+      setError('Server error: ' + err.message);
     }
   };
 
   return (
-    <div style={{ maxWidth: 500, margin: "auto" }}>
+    <div className="post-form">
       <textarea
-        rows="3"
-        placeholder="Enter post idea..."
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-        style={{ width: "100%", marginBottom: "1rem", padding: "0.5rem" }}
+        placeholder="Describe the idea for your post..."
+        rows={4}
+        cols={50}
       />
-      <button onClick={generateCaption} disabled={loading}>
-        {loading ? "Generating..." : "Generate Caption"}
-      </button>
+      <br />
+      <button onClick={handleGenerateCaption}>Generate Caption</button>
+      <button onClick={handleGenerateHashtags}>Generate Hashtags</button>
 
-      {caption && (
-        <>
-          <p><strong>Generated Caption:</strong></p>
-          <textarea value={caption} readOnly style={{ width: "100%" }} />
-        </>
-      )}
-
-      <div style={{ marginTop: "1rem" }}>
-        <input
-          type="url"
-          placeholder="Public image URL (https://...)"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          style={{ width: "100%", padding: "0.5rem", marginBottom: "0.5rem" }}
-        />
-        <select
-          value={postType}
-          onChange={(e) => setPostType(e.target.value)}
-          style={{ width: "100%", padding: "0.5rem", marginBottom: "0.5rem" }}
-        >
-          <option value="post">Post</option>
-        </select>
-        <button onClick={uploadPost}>Upload to Instagram</button>
+      <div className="output">
+        <h3>Generated Output:</h3>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {caption && <p><strong>Caption:</strong> {caption}</p>}
+        {hashtags && <p><strong>Hashtags:</strong> {hashtags}</p>}
       </div>
     </div>
   );
 }
- 
+
+export default PostForm;
