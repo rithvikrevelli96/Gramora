@@ -10,8 +10,5 @@ const PostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Post = mongoose.model('Post', PostSchema);
-export default Post;
-
-
-
+// ✅ Prevent OverwriteModelError by reusing existing model if already compiled
+export default mongoose.models.Post || mongoose.model('Post', PostSchema);
