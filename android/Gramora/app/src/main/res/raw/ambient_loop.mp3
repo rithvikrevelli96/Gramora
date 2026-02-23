@@ -1,0 +1,1 @@
+ambientPlayer = MediaPlayer.create(this, R.raw.ambient_loop)

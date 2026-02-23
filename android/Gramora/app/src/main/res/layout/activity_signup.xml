@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signupContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0a0f1c"
+    tools:context=".SignupActivity">
+
+    <!-- 🔹 Logo -->
+    <ImageView
+        android:id="@+id/signupLogo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 🔹 Signup Card (directly under logo) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/signupCard"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="180dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#33ffffff"
+        app:layout_constraintTop_toBottomOf="@id/signupLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <!-- 🔹 Title -->
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Account"
+                android:textSize="20sp"
+                android:textColor="#00f0ff"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <!-- 🔹 Subtitle -->
+            <TextView
+                android:id="@+id/subtitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unleash your digital form"
+                android:textSize="14sp"
+                android:textColor="#cccccc"
+                android:textAlignment="center"
+                android:layout_marginBottom="16dp" />
+
+            <!-- 🔹 Inputs -->
+            <EditText
+                android:id="@+id/nameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:textColor="#00f0ff"
+                android:textColorHint="#699FA0"
+                android:backgroundTint="#00f0ff"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:textColor="#00f0ff"
+                android:textColorHint="#699FA0"
+                android:backgroundTint="#00f0ff"
+                android:inputType="textEmailAddress"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/passwordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:textColor="#00f0ff"
+                android:textColorHint="#699FA0"
+                android:backgroundTint="#00f0ff"
+                android:inputType="textPassword"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/confirmPasswordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Password"
+                android:textColor="#00f0ff"
+                android:textColorHint="#699FA0"
+                android:backgroundTint="#00f0ff"
+                android:inputType="textPassword"
+                android:layout_marginBottom="16dp" />
+
+            <!-- 🔹 Sign Up Button -->
+            <Button
+                android:id="@+id/signupButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textColor="#000000"
+                android:backgroundTint="#FFD700"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <!-- 🔹 Login Link (inside card) -->
+            <TextView
+                android:id="@+id/loginLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account? Log in"
+                android:textColor="#00ffff"
+                android:textSize="14sp"
+                android:textAlignment="center" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
