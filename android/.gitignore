@@ -1,0 +1,64 @@
+# ==================== GRADLE ====================
+.gradle/
+build/
+.gradlew.bat
+.gradlew
+
+# ==================== IDE ====================
+.idea/
+.classpath
+.project
+.settings/
+local.properties
+*.iml
+*.swp
+
+# ==================== BUILD & GENERATED ====================
+bin/
+gen/
+proguard/
+*.apk
+*.ap_
+*.dex
+*.class
+
+# ==================== ENVIRONMENT ====================
+.env
+.env.local
+.env.*.local
+local.properties
+
+# ==================== OS FILES ====================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==================== LOGS ====================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==================== SIGNING ====================
+keystore.properties
+*.jks
+*.keystore
+*.key
+*.pem
+
+# ==================== NODE/CAPACITOR ====================
+node_modules/
+package-lock.json
+dist/
+www/
+
+# ==================== MISC ====================
+/.gradle
+/captures
+/.externalNativeBuild
+/.cxx
+app/release/

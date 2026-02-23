@@ -4,40 +4,115 @@ import cors from 'cors';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import fetch from 'node-fetch';
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 import instagramRoutes from './routes/instagramRoutes.js';
 import { generateContentBundle } from './routes/services/utils/aiService.js';
+import User from './models/User.js';
+import Post from './models/Post.js';
 
 dotenv.config();
-
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
+app.use(cors({ origin: "*", methods: ["GET", "POST"], credentials: true }));
+app.use(express.json());
+
+// ====== Cloudinary ======
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-app.use(cors({
-  origin: "*", // ✅ Allow all origins for Android access
-  methods: ["GET", "POST"],
-  credentials: true
-}));
+// ====== MongoDB ======
+const MONGODB_URI = process.env.MONGODB_URI;
 
-app.use(express.json());
+try {
+  await mongoose.connect(MONGODB_URI);
+  console.log("✅ Connected to MongoDB Atlas");
+} catch (err) {
+  console.error("❌ MongoDB connection failed:", err.message);
+}
 
-// ✅ Android upload route
+// ====== Auth ======
+app.post("/signup", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    if (!username || !email || !password) {
+      return res.status(400).json({ success: false, message: "All fields required" });
+    }
+    const existing = await User.findOne({ $or: [{ email }, { username }] });
+    if (existing) {
+      return res.status(409).json({ success: false, message: "User already exists" });
+    }
+    const hashed = await bcrypt.hash(password, 10);
+    const user = new User({ username, email, password: hashed });
+    await user.save();
+    console.log(`✅ User created: ${username} (${email})`);
+    res.status(201).json({
+      success: true,
+      message: "Signup successful",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        createdAt: user.createdAt
+      }
+    });
+  } catch (err) {
+    console.error("Signup error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: "All fields required" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+    console.log(`✅ User logged in: ${user.username} (${email})`);
+    res.json({
+      success: true,
+      message: "Login successful",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        createdAt: user.createdAt
+      }
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// ====== Android content routes ======
 app.post("/api/upload", async (req, res) => {
   const { idea, caption, imageUrl } = req.body;
   if (!idea || !caption || !imageUrl) {
     return res.status(400).json({ error: "Missing fields" });
   }
-  console.log("📦 Android Post Received:", { idea, caption, imageUrl });
-  res.status(200).json({ success: true, message: "Post received" });
+  try {
+    const post = new Post({ idea, content: caption, imageUrl });
+    await post.save();
+    res.status(200).json({ success: true, message: "Post received", id: post._id });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
-// ✅ Caption + Hashtag generation route
 app.post("/api/generate", async (req, res) => {
   const { idea, segment } = req.body;
   if (!idea || !segment) {
@@ -45,15 +120,12 @@ app.post("/api/generate", async (req, res) => {
   }
   try {
     const { captions, hashtags } = await generateContentBundle(idea, segment);
-    console.log("🧠 Gemini generated:", { captions, hashtags });
     res.status(200).json({ captions, hashtags });
   } catch (error) {
-    console.error("❌ Gemini error:", error.message);
     res.status(500).json({ error: "Failed to generate captions" });
   }
 });
 
-// ✅ Hashtag-only route for Android
 app.post("/api/generateHashtag", async (req, res) => {
   const { idea, segment } = req.body;
   if (!idea || !segment) {
@@ -69,10 +141,9 @@ app.post("/api/generateHashtag", async (req, res) => {
   }
 });
 
-// ✅ Instagram API routes
+// ====== Instagram API routes ======
 app.use("/api/instagram", instagramRoutes);
 
-// ✅ Instagram upload route
 app.post("/api/instagram/upload", upload.single("image"), async (req, res) => {
   const { caption } = req.body;
   const accessToken = process.env.IG_ACCESS_TOKEN;
@@ -123,7 +194,7 @@ app.post("/api/instagram/upload", upload.single("image"), async (req, res) => {
   }
 });
 
-// ✅ Health check
+// ====== Health check ======
 app.get("/health", (req, res) => res.json({ ok: true }));
 app.get("/api/ping", (req, res) => res.json({ pong: true }));
 
