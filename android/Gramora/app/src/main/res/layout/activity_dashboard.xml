@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dashboardContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0a0f1c"
+    tools:context=".DashboardActivity">
+
+    <!-- 🔹 Logo -->
+    <ImageView
+        android:id="@+id/dashboardLogo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 🔹 Dashboard Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dashboardCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="12dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#33ffffff"
+        app:layout_constraintTop_toBottomOf="@id/dashboardLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- ✅ Scroll entire card content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center_horizontal">
+
+                <!-- 🔹 Prompt -->
+                <TextView
+                    android:id="@+id/ideaPrompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Describe the idea for your post:"
+                    android:textSize="16sp"
+                    android:textColor="#00f0ff"
+                    android:layout_marginBottom="4dp" />
+
+                <!-- 🔹 Input -->
+                <EditText
+                    android:id="@+id/ideaInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Start with a prompt. We'll handle the rest."
+                    android:textColor="#00f0ff"
+                    android:textColorHint="#00f0ff"
+                    android:backgroundTint="#00f0ff"
+                    android:inputType="text"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 🔹 Segment Label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select your content segment:"
+                    android:textColor="#00f0ff"
+                    android:layout_marginBottom="4dp" />
+
+                <!-- 🔹 Segment Selector -->
+                <Spinner
+                    android:id="@+id/segmentSelect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 🔹 Image Preview -->
+                <ImageView
+                    android:id="@+id/imagePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginBottom="16dp"
+                    android:background="#222222" />
+
+                <!-- 🔹 Buttons -->
+                <Button
+                    android:id="@+id/imageImportBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Import Image"
+                    android:textColor="#ffffff"
+                    android:backgroundTint="#00bfff"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <Button
+                    android:id="@+id/generateCaptionBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Generate Caption"
+                    android:textColor="#ffffff"
+                    android:backgroundTint="#00bfff"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <Button
+                    android:id="@+id/generateHashtagBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Generate Hashtags"
+                    android:textColor="#ffffff"
+                    android:backgroundTint="#00bfff"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- 🔹 Image Caption Preview -->
+                <TextView
+                    android:id="@+id/imageCaption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your caption will appear here"
+                    android:textColor="#00f0ff"
+                    android:textSize="16sp"
+                    android:padding="8dp"
+                    android:background="#222222"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 🔹 Scrollable Caption List -->
+                <LinearLayout
+                    android:id="@+id/captionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 🔹 Hashtag Display -->
+                <TextView
+                    android:id="@+id/hashtagDisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your hashtags will appear here"
+                    android:textColor="#00f0ff"
+                    android:textSize="16sp"
+                    android:padding="8dp"
+                    android:background="#222222"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone" />
+
+                <!-- 🔹 Upload Button -->
+                <Button
+                    android:id="@+id/uploadBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Send to Instagram"
+                    android:textColor="#000000"
+                    android:backgroundTint="#FFD700"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
