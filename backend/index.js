@@ -5,7 +5,7 @@ import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import fetch from 'node-fetch';
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import instagramRoutes from './routes/instagramRoutes.js';
 import { generateContentBundle } from './routes/services/utils/aiService.js';
