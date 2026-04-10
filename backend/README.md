@@ -28,7 +28,7 @@
 - MongoDB user storage with unique constraints
 
 ✅ **Content Generation**
-- AI-powered caption generation (Google Gemini)
+- AI-powered caption generation (Groq API)
 - Hashtag generation for posts
 - Content idea processing
 
@@ -50,7 +50,7 @@
 - **npm** v6+
 - **MongoDB Atlas** account (or local MongoDB)
 - **Cloudinary** account (for image hosting)
-- **Google Gemini API** key
+- **Groq API** key
 - **Instagram Developer** account (for posting)
 
 ---
@@ -77,7 +77,7 @@ npm install
 - bcrypt: Password hashing
 - dotenv: Environment variables
 - cloudinary: Image hosting
-- @google/generative-ai: AI content generation
+- node-fetch: HTTP client
 - cors: Cross-origin resource sharing
 - multer: File uploads
 ```
@@ -94,7 +94,7 @@ PORT=5002
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/gramora
 
 # API Keys
-GEMINI_API_KEY=your_gemini_api_key
+GROQ_API_KEY=your_groq_api_key
 
 # Cloudinary
 CLOUD_NAME=your_cloud_name
@@ -478,7 +478,7 @@ backend/
 |----------|-------------|---------|
 | `PORT` | Server port | `5002` |
 | `MONGODB_URI` | MongoDB connection string | `mongodb+srv://...` |
-| `GEMINI_API_KEY` | Google Gemini API key | `AIza...` |
+| `GROQ_API_KEY` | Groq API key | `gsk_...` |
 | `CLOUD_NAME` | Cloudinary cloud name | `dja37lluh` |
 | `CLOUD_API_KEY` | Cloudinary API key | `218569838633147` |
 | `CLOUD_API_SECRET` | Cloudinary API secret | `0KBk82rT...` |

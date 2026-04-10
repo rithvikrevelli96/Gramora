@@ -1,19 +1,36 @@
 import dotenv from "dotenv";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import fetch from "node-fetch";
 
 dotenv.config();
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 
-async function testGemini() {
+async function testGroq() {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const result = await model.generateContent("Write a funny Instagram caption for a sunrise photo.");
-        const text = result.response.text();
-        console.log("✅ Gemini response:", text);
+        const response = await fetch(GROQ_API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${GROQ_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: "mixtral-8x7b-32768",
+                messages: [
+                    {
+                        role: "user",
+                        content: "Write a funny Instagram caption for a sunrise photo."
+                    }
+                ]
+            })
+        });
+
+        const data = await response.json();
+        const text = data?.choices?.[0]?.message?.content;
+        console.log("✅ Groq response:", text);
     } catch (err) {
-        console.error("❌ Gemini test failed:", err.message);
+        console.error("❌ Groq test failed:", err.message);
     }
 }
 
-testGemini();
+testGroq();

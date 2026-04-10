@@ -36,7 +36,7 @@ if (unparsable.length) {
 
 const required = [
     "PORT",
-    "GEMINI_API_KEY",
+    "GROQ_API_KEY",
     "INSTAGRAM_ACCESS_TOKEN",
     "INSTAGRAM_ACCOUNT_ID",
     "INSTAGRAM_BUSINESS_ID",
@@ -107,7 +107,7 @@ if (map.has("INSTAGRAM_SCOPES")) {
 }
 
 // report secret presence (no values)
-const secretKeys = ["GEMINI_API_KEY", "INSTAGRAM_ACCESS_TOKEN", "MONGODB_URI"];
+const secretKeys = ["GROQ_API_KEY", "INSTAGRAM_ACCESS_TOKEN", "MONGODB_URI"];
 for (const k of secretKeys) {
     if (map.has(k)) {
         console.log(`${k} present, length=${map.get(k)[0].length} (value not shown)`);

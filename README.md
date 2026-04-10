@@ -2,7 +2,7 @@
 
 **An intelligent platform for creating, managing, and publishing Instagram content powered by AI.**
 
-Generate captions, hashtags, and post content automatically using Google Gemini AI, then publish directly to Instagram with secure MongoDB-backed user authentication.
+Generate captions, hashtags, and post content automatically using Groq AI, then publish directly to Instagram with secure MongoDB-backed user authentication.
 
 ---
 
@@ -61,7 +61,7 @@ Gramora/
 - ✅ Email & username uniqueness validation
 
 ### 🤖 AI Content Generation
-- ✅ AI-powered caption generation (Google Gemini)
+- ✅ AI-powered caption generation (Groq API)
 - ✅ Smart hashtag suggestions
 - ✅ Content idea processing
 - ✅ Segment-based content optimization
@@ -87,7 +87,7 @@ Gramora/
 - **Framework:** Express.js
 - **Database:** MongoDB Atlas
 - **Authentication:** bcrypt
-- **AI:** Google Generative AI (Gemini)
+- **AI:** Groq API
 - **Image Hosting:** Cloudinary
 - **Social Media:** Instagram Graph API
 
