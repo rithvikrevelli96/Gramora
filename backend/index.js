@@ -6,6 +6,8 @@ import { v2 as cloudinary } from 'cloudinary';
 import fetch from 'node-fetch';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger.js';
 
 import instagramRoutes from './routes/instagramRoutes.js';
 import { generateContentBundle } from './routes/services/utils/aiService.js';
@@ -16,8 +18,14 @@ dotenv.config();
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
-app.use(cors({ origin: "*", methods: ["GET", "POST"], credentials: true }));
+app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE"], credentials: true }));
 app.use(express.json());
+
+// ====== Swagger Documentation ======
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get('/api-docs', (req, res) => {
+  res.json(swaggerSpec);
+});
 
 // ====== Cloudinary ======
 cloudinary.config({
@@ -25,6 +33,55 @@ cloudinary.config({
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
+
+// ====== Root Routes ======
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Health check - API is running
+ *     responses:
+ *       200:
+ *         description: Server is running
+ */
+app.get("/", (req, res) => {
+  res.json({ message: "Gramora Backend is Running 🚀", version: "1.0.0" });
+});
+
+/**
+ * @swagger
+ * /api/test:
+ *   get:
+ *     summary: Test API endpoint
+ *     responses:
+ *       200:
+ *         description: API is working correctly
+ */
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API working", timestamp: new Date().toISOString() });
+});
+
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Health check endpoint
+ *     responses:
+ *       200:
+ *         description: Server health status
+ */
+app.get("/health", (req, res) => res.json({ ok: true, status: "healthy" }));
+
+/**
+ * @swagger
+ * /api/ping:
+ *   get:
+ *     summary: Ping endpoint
+ *     responses:
+ *       200:
+ *         description: Pong response
+ */
+app.get("/api/ping", (req, res) => res.json({ pong: true }));
 
 // ====== MongoDB ======
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -194,9 +251,16 @@ app.post("/api/instagram/upload", upload.single("image"), async (req, res) => {
   }
 });
 
-// ====== Health check ======
-app.get("/health", (req, res) => res.json({ ok: true }));
-app.get("/api/ping", (req, res) => res.json({ pong: true }));
 
+// ====== Start Server ======
 const PORT = process.env.PORT || 5002;
-app.listen(PORT, "0.0.0.0", () => console.log(`✅ Server running on port ${PORT}`));
+const HOST = "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+  console.log(`\n🚀 Gramora Backend Server Initialized`);
+  console.log(`📍 Local: http://localhost:${PORT}`);
+  console.log(`🌍 Network: http://0.0.0.0:${PORT}`);
+  console.log(`📚 API Docs: http://localhost:${PORT}/docs`);
+  console.log(`✅ Server running on port ${PORT}\n`);
+});
+
